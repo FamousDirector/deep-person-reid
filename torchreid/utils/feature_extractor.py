@@ -67,11 +67,16 @@ class FeatureExtractor(object):
         device='cuda',
         verbose=True
     ):
+        if model_path and check_isfile(model_path):
+            use_pretrained = False
+        else:
+            use_pretrained = True
+
         # Build model
         model = build_model(
             model_name,
             num_classes=1,
-            pretrained=True,
+            pretrained=use_pretrained,
             use_gpu=device.startswith('cuda')
         )
         model.eval()
